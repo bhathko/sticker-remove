@@ -38,7 +38,7 @@ sticker-creator/                 # Project root (may be named 'sticker-remove')
 │   │       # NOTE: Could be renamed to 'sticker_processor.py' to match class name
 │   │       └── StickerProcessor class
 │   │           ├── __init__()   - Load RMBG-1.4 model
-│   │           ├── generate_image() - Gemini Imagen/Banana API
+│   │           ├── generate_image() - Gemini Imagen / Nano Banana API
 │   │           ├── remove_background() - AI background removal
 │   │           ├── resize_image() - Smart resizing with padding
 │   │           └── has_transparency() - Check for alpha channel
@@ -242,7 +242,7 @@ Configuration:
 ```python
 __init__(model_name="briaai/RMBG-1.4")
   - Loads transformers pipeline for background removal
-  - Loads API keys (GOOGLE_API_KEY, BANANA_API_KEY, BANANA_MODEL_KEY)
+  - Loads API key (GOOGLE_API_KEY)
   - Heavy: Downloads 1.7GB model on first run
 ```
 
@@ -253,8 +253,8 @@ __init__(model_name="briaai/RMBG-1.4")
 ```
 Purpose: Create image from text
 API Priority:
-  1. Try Gemini Imagen 3 (_generate_with_gemini_imagen)
-  2. Try Banana.dev (_generate_with_banana)
+  1. Try Gemini Imagen 3 (REST API)
+  2. Try Nano Banana (google-genai SDK)
   3. Fallback to test image (data/input/1.jpg)
 
 Returns: Path to saved image
@@ -367,7 +367,7 @@ generate_image → check_background → remove_background → resize_for_sticker
 **Contents**:
 
 - Images from Gemini Imagen API
-- Images from Banana.dev
+- Images from Nano Banana (google-genai)
 - Fallback test images
 - Format: JPG, PNG
 

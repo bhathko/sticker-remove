@@ -7,11 +7,10 @@ This project is an AI-powered sticker creation tool that utilizes **LangGraph** 
 - **Purpose**: Automate the creation of stickers from text prompts.
 - **Core Stack**: 
   - **Orchestration**: LangGraph (v2.0 ReAct agent pattern).
-  - **LLM/Image Gen**: Google Gemini (Imagen 3 API).
+  - **LLM/Image Gen**: Google Gemini (Imagen 3 API via REST and official google-genai SDK).
   - **Image Processing**: RMBG-1.4 (Background Removal), OpenCV, PIL, PyTorch.
   - **Architecture**: Separates **Services** (core business logic in `app/services/processor.py`) from **Tools** (LLM interface in `app/tools/sticker_tool.py`).
-
-## 🛠️ Key Commands
+  ## 🛠️ Key Commands
 
 - **Setup Dependencies**: `pip install -r requirements.txt`
 - **Environment Setup**: `cp .env.example .env` (Requires `GOOGLE_API_KEY`)

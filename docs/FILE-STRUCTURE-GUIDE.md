@@ -229,7 +229,7 @@ All code follows PEP 8 conventions:
 
 `UPPERCASE_WITH_UNDERSCORES`
 
-- ✅ `GOOGLE_API_KEY`, `BANANA_API_KEY`
+- ✅ `GOOGLE_API_KEY`
 
 ### ✅ Packages
 

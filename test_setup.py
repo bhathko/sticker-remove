@@ -48,6 +48,13 @@ def test_imports():
         print(f"❌ Project import error: {e}")
         return False
     
+    try:
+        import google.genai
+        print("✅ Official Google GenAI (Nano Banana) package installed")
+    except ImportError as e:
+        print(f"❌ Google GenAI import error: {e}")
+        return False
+    
     return True
 
 def test_environment():
@@ -58,18 +65,11 @@ def test_environment():
     load_dotenv()
     
     google_key = os.getenv("GOOGLE_API_KEY")
-    banana_key = os.getenv("BANANA_API_KEY")
-    banana_model = os.getenv("BANANA_MODEL_KEY")
     
     if google_key and google_key != "your_google_api_key_here":
         print("✅ GOOGLE_API_KEY is configured")
     else:
         print("⚠️  GOOGLE_API_KEY not configured (image generation will use fallback)")
-    
-    if banana_key and banana_model:
-        print("✅ Banana.dev API keys configured")
-    else:
-        print("ℹ️  Banana.dev API keys not configured (optional)")
     
     return True
 

@@ -7,6 +7,11 @@ import requests
 import base64
 import io
 from dotenv import load_dotenv
+try:
+    from google import genai
+    from google.genai import types
+except ImportError:
+    genai = None
 
 # Load environment variables from .env file
 load_dotenv()
@@ -23,8 +28,12 @@ class StickerProcessor:
         
         # Initialize API keys from environment
         self.google_api_key = os.getenv("GOOGLE_API_KEY")
-        self.banana_api_key = os.getenv("BANANA_API_KEY")
-        self.banana_model_key = os.getenv("BANANA_MODEL_KEY")
+        
+        # Initialize Google GenAI Client (Nano Banana)
+        if genai and self.google_api_key:
+            self.client = genai.Client(api_key=self.google_api_key)
+        else:
+            self.client = None
 
     def remove_background(self, input_path, output_path, erosion_size=1, island_size=50):
         """
@@ -96,29 +105,29 @@ class StickerProcessor:
 
     def generate_image(self, prompt, output_path):
         """
-        Generates an image using Google Gemini Imagen API or Banana.dev API.
+        Generates an image using Google Gemini Imagen API or Nano Banana (google-genai) API.
         Falls back to test image if API keys are not configured.
         """
         print(f"Generating image for prompt: '{prompt}'")
         
-        # Try Gemini Imagen API first
+        # Try Gemini Imagen API (REST) first
         if self.google_api_key:
             try:
                 return self._generate_with_gemini_imagen(prompt, output_path)
             except Exception as e:
                 print(f"Gemini Imagen API Error: {e}")
-                print("Falling back to Banana API or test image...")
+                print("Falling back to Nano Banana (google-genai) SDK...")
         
-        # Try Banana.dev API
-        if self.banana_api_key and self.banana_model_key:
+        # Try Nano Banana (google-genai SDK)
+        if self.client:
             try:
-                return self._generate_with_banana(prompt, output_path)
+                return self._generate_with_nano_banana(prompt, output_path)
             except Exception as e:
-                print(f"Banana API Error: {e}")
+                print(f"Nano Banana API Error: {e}")
                 print("Falling back to test image...")
         
         # Fallback to test image
-        print("Warning: No API keys configured. Using fallback image.")
+        print("Warning: No API keys configured or APIs failed. Using fallback image.")
         if os.path.exists("data/input/1.jpg"):
             import shutil
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -166,30 +175,33 @@ class StickerProcessor:
         else:
             raise ValueError(f"Gemini API returned status {response.status_code}: {response.text}")
     
-    def _generate_with_banana(self, prompt, output_path):
+    def _generate_with_nano_banana(self, prompt, output_path):
         """
-        Generate image using Banana.dev API.
-        Implement based on your specific Banana model.
+        Generate image using official google-genai SDK (Nano Banana).
         """
-        try:
-            import banana_dev as banana
-            model_inputs = {"prompt": prompt}
-            out = banana.run(self.banana_api_key, self.banana_model_key, model_inputs)
+        if not self.client:
+            raise ImportError("google-genai package not installed or GOOGLE_API_KEY missing.")
             
-            # Extract and save image from banana response
-            # This depends on your specific model output format
-            if 'modelOutputs' in out and len(out['modelOutputs']) > 0:
-                image_data = out['modelOutputs'][0].get('image_base64')
-                if image_data:
-                    image_bytes = base64.b64decode(image_data)
-                    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-                    with open(output_path, 'wb') as f:
-                        f.write(image_bytes)
-                    return output_path
-            
-            raise ValueError("No image data in Banana response")
-        except ImportError:
-            raise ImportError("banana_dev package not installed. Run: pip install banana-dev")
+        response = self.client.models.generate_image(
+            model='imagen-3.0-generate-001',
+            prompt=prompt,
+            config=types.GenerateImageConfig(
+                number_of_images=1,
+                include_rai_reason=True,
+                output_mime_type='image/png'
+            )
+        )
+        
+        if response.generated_images:
+            # The SDK might return a PIL Image object or bytes depending on version/config
+            # Based on docs, it usually has .image which is a PIL object
+            gen_img = response.generated_images[0].image
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            gen_img.save(output_path)
+            print(f"Image generated successfully with Nano Banana (google-genai)")
+            return output_path
+        else:
+            raise ValueError("No image data in Nano Banana response")
 
     def has_transparency(self, input_path):
         """

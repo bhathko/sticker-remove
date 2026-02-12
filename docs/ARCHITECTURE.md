@@ -59,7 +59,7 @@ To understand how they interact, consider a request to **"Make a 370x320 sticker
 
 1.  **Agent (Model)**: Reads the user prompt and looks at the **Tool** descriptions.
 2.  **Tool**: The Agent decides to call the `generate_image` tool with specific arguments.
-3.  **Service**: The Tool invokes the `StickerProcessor.generate_image` method. The service talks to the Banana API and saves the file.
+3.  **Service**: The Tool invokes the `StickerProcessor.generate_image` method. The service talks to the Google Imagen API (via REST or official SDK) and saves the file.
 4.  **Tool**: Returns "Image saved at data/input/cat.jpg" to the Agent.
 5.  **Agent**: Sees the image is saved. It now calls the `remove_background` tool.
 6.  **Service**: The Service runs the `RMBG-1.4` model on the cat image.

@@ -47,29 +47,18 @@ The project uses a `.env` file for API keys and sensitive configuration.
 2. **Edit `.env` and add your API keys**:
 
    ```bash
-   # Required: Gemini LLM for agent reasoning
+   # Required: Gemini LLM for agent reasoning and Imagen 3 / Nano Banana for image generation
    GOOGLE_API_KEY=your_google_api_key_here
-
-   # Required: Image generation (Gemini Imagen has priority, Banana is fallback)
-   BANANA_API_KEY=your_banana_api_key_here
-   BANANA_MODEL_KEY=your_banana_model_key_here
    ```
 
 ### Getting API Keys
 
-**Google API Key (Gemini)**:
+**Google API Key (Gemini & Nano Banana)**:
 
-1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
+1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Create or select a project
 3. Generate API key
 4. Add to `.env` as `GOOGLE_API_KEY`
-
-**Banana API Keys** (fallback for image generation):
-
-1. Sign up at [Banana.dev](https://www.banana.dev/)
-2. Create a new project
-3. Get your API key and Model key
-4. Add to `.env` as `BANANA_API_KEY` and `BANANA_MODEL_KEY`
 
 ---
 
@@ -229,7 +218,7 @@ For different sticker sizes:
 
 ### Image Processing Pipeline
 
-1. **Generation**: Gemini Imagen API or Banana.dev creates image from text
+1. **Generation**: Gemini Imagen API or Nano Banana (google-genai SDK) creates image from text
 2. **Background Check**: Analyzes alpha channel to detect background
 3. **AI Removal**: RMBG-1.4 transformer model segments foreground/background
 4. **Edge Erosion**: OpenCV's `erode()` function shrinks transparency mask
@@ -260,7 +249,7 @@ pip install -r requirements.txt --upgrade
 **"API key not found"**:
 
 - Verify `.env` file exists in project root
-- Check key names match exactly: `GOOGLE_API_KEY`, `BANANA_API_KEY`
+- Check key names match exactly: `GOOGLE_API_KEY`
 - Restart application after editing `.env`
 
 **"RMBG model download failed"**:

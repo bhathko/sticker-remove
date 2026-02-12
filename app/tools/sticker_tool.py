@@ -40,7 +40,7 @@ def get_processor():
 @tool("generate_image", args_schema=GenerateImageInput, return_direct=False)
 def generate_image_tool(prompt: str, output_filename: str) -> str:
     """
-    Generates an image from a text prompt using Google Gemini Imagen API or Banana.dev.
+    Generates an image from a text prompt using Google Gemini Imagen 3 API (Nano Banana).
     
     Use this tool FIRST when creating a sticker to generate the base image.
     The prompt should describe the visual appearance of the sticker character or object.

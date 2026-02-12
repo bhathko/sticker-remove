@@ -16,6 +16,4 @@ langgraph
 pydantic
 python-dotenv
 requests
-
-# Optional: For Banana.dev support
-# banana-dev
+google-genai
