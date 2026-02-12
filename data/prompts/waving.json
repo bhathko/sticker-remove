@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference",
+  "pose": "standing, one hand raised high waving",
+  "expression": "smiling warmly, friendly",
+  "action": "waving hello",
+  "art_style": "same as reference image",
+  "framing": "full body",
+  "background": "white background",
+  "extras": null
+}

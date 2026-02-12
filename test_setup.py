@@ -40,7 +40,8 @@ def test_imports():
             generate_image_tool,
             check_background_tool,
             remove_background_tool,
-            resize_image_tool
+            resize_image_tool,
+            image_to_image_tool
         )
         from app.services.processor import StickerProcessor
         print("✅ Project modules imported successfully")

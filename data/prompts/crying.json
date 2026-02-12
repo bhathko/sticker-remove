@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference",
+  "pose": "standing, shoulders slumped, fists near eyes",
+  "expression": "sobbing, very sad",
+  "action": "crying with big tear drops",
+  "art_style": "same as reference image",
+  "framing": "full body",
+  "background": "white background",
+  "extras": "large exaggerated tear drops flying off"
+}

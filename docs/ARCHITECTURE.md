@@ -176,11 +176,12 @@ This allows the agent to:
 │  app/model.py    │          │  app/tools/          │
 │                  │          │  sticker_tool.py     │
 │  Gemini Config   │          │                      │
-│  - API Key       │          │  4 Tool Wrappers:    │
+│  - API Key       │          │  5 Tool Wrappers:    │
 │  - Temperature   │          │  1. generate_image   │
-│  - Model Name    │          │  2. check_background │
-└──────────────────┘          │  3. remove_bg        │
-                               │  4. resize           │
+│  - Model Name    │          │  2. image_to_image   │
+│                  │          │  3. check_background │
+└──────────────────┘          │  4. remove_bg        │
+                               │  5. resize           │
                                └──────────┬───────────┘
                                           │
                                           ▼

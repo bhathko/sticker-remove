@@ -40,22 +40,30 @@ def main():
             # Stream the agent's execution
             for event in agent.stream(
                 {"messages": [HumanMessage(content=user_input)]},
-                config={"configurable": {"thread_id": "default"}},
+                config={"configurable": {"thread_id": "sticker_creation_session"}},
                 stream_mode="values"
             ):
                 # Get the latest message
                 if "messages" in event:
                     last_message = event["messages"][-1]
                     
-                    # Print AI messages (reasoning)
-                    if hasattr(last_message, 'content') and last_message.content:
-                        if hasattr(last_message, 'type'):
-                            if last_message.type == 'ai':
-                                print(f"💭 Agent: {last_message.content}")
-                            elif last_message.type == 'tool':
-                                print(f"🔧 Tool Result: {last_message.content[:100]}...")
+                    # 1. Print AI Reasoning (Thought Process)
+                    if last_message.type == 'ai':
+                        if last_message.content:
+                            print(f"\n💭 Agent: {last_message.content}")
+                        
+                        # 2. Print Tool Calls (Intent to act)
+                        if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
+                            for tc in last_message.tool_calls:
+                                print(f"🛠️  Calling Tool: [{tc['name']}] with args: {tc['args']}")
+                    
+                    # 3. Print Tool Results (Observation)
+                    elif last_message.type == 'tool':
+                        print(f"👁️  Observation: {last_message.content}")
             
-            print("\n✅ Done!")
+            print("\n" + "-" * 30)
+            print("✅ Step Complete")
+            print("-" * 30)
             
         except KeyboardInterrupt:
             print("\n\n⚠️  Interrupted by user")

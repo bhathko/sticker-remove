@@ -39,6 +39,7 @@ sticker-creator/                 # Project root (may be named 'sticker-remove')
 │   │       └── StickerProcessor class
 │   │           ├── __init__()   - Load RMBG-1.4 model
 │   │           ├── generate_image() - Gemini Imagen 4.0 API
+│           ├── image_to_image() - Local image + Style prompt
 │   │           ├── remove_background() - AI background removal
 │   │           ├── resize_image() - Smart resizing with padding
 │   │           └── has_transparency() - Check for alpha channel

@@ -1,0 +1,12 @@
+{
+  "type": "text-to-image",
+  "base_image": null,
+  "subject": "cute cartoon cat",
+  "pose": "standing upright",
+  "expression": "cool, confident",
+  "action": "wearing sunglasses",
+  "art_style": "cartoon sticker style, flat colors, clean lines",
+  "framing": "full body",
+  "background": "white background",
+  "extras": null
+}

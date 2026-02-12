@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference",
+  "pose": "standing straight, one finger held up to lips",
+  "expression": "calm, secretive",
+  "action": "making a 'shh' silent gesture",
+  "art_style": "same as reference image",
+  "framing": "full body",
+  "background": "white background",
+  "extras": null
+}

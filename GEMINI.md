@@ -22,8 +22,8 @@ This project is an AI-powered sticker creation tool that utilizes **LangGraph** 
 
 - `app/agent.py`: LangGraph agent definition using `create_react_agent`.
 - `app/model.py`: Gemini LLM configuration via LangChain (defaults to `gemini-2.5-flash`).
-- `app/services/processor.py`: `StickerProcessor` class for image generation (Imagen 4.0), background removal (RMBG-1.4), and resizing.
-- `app/tools/sticker_tool.py`: LangChain tools (`generate_image`, `check_image_background`, `remove_background`, `resize_for_sticker`).
+- `app/services/processor.py`: `StickerProcessor` class for image generation (Imagen 4.0), image-to-image styling, background removal (RMBG-1.4), and resizing.
+- `app/tools/sticker_tool.py`: LangChain tools (`generate_image`, `image_to_image`, `check_image_background`, `remove_background`, `resize_for_sticker`).
 - `data/`: `input/` for base images, `output/` for final stickers.
 - `docs/`: Extensive documentation including `ARCHITECTURE.md`, `LANGGRAPH-THEORY.md`, and `DEVELOPER-REFERENCE.md`.
 

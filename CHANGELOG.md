@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.2.0] - 2026-02-12
+
+### 🚀 Major Changes
+
+#### Image-to-Image Support
+- **Added `image_to_image` capability** to `StickerProcessor` using Imagen 4's editing features.
+- **New `image_to_image_tool`** allowing the agent to use local images as a base for stylization.
+- **Updated Agent Persona** to understand and handle local image base files.
+
 ## [2.1.0] - 2026-02-12
 
 ### 🚀 Major Changes

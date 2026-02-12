@@ -182,10 +182,10 @@ class StickerProcessor:
         if not self.client:
             raise ImportError("google-genai package not installed or GOOGLE_API_KEY missing.")
             
-        response = self.client.models.generate_image(
+        response = self.client.models.generate_images(
             model='imagen-4.0-generate-001',
             prompt=prompt,
-            config=types.GenerateImageConfig(
+            config=types.GenerateImagesConfig(
                 number_of_images=1,
                 include_rai_reason=True,
                 output_mime_type='image/png'
@@ -202,6 +202,58 @@ class StickerProcessor:
             return output_path
         else:
             raise ValueError("No image data in Nano Banana response")
+
+    def image_to_image(self, prompt, base_image_path, output_path):
+        """
+        Generates a new image based on a local base image and a text prompt.
+        Uses Gemini's native image editing via generate_content (not Imagen predict).
+        The base image is sent alongside the prompt so Gemini can apply style/action changes.
+        """
+        if not self.google_api_key:
+            raise ValueError("GOOGLE_API_KEY is missing. Cannot perform image-to-image.")
+            
+        if not os.path.exists(base_image_path):
+            raise FileNotFoundError(f"Base image not found: {base_image_path}")
+
+        print(f"Generating image-to-image for prompt: '{prompt}' using base image: {base_image_path}")
+        
+        if not genai or not self.client:
+            raise ImportError("google-genai package not installed or GOOGLE_API_KEY missing.")
+
+        # Load the base image as PIL Image
+        base_image = Image.open(base_image_path).convert("RGB")
+        
+        # Build an enhanced prompt that instructs the model to regenerate the full character
+        # in a new pose, using the reference image for style/design consistency only.
+        enhanced_prompt = (
+            f"Look at this reference character image carefully. "
+            f"Generate a completely NEW image of this SAME character (same art style, same colors, same design, same proportions) "
+            f"but in a completely new pose/action: {prompt}. "
+            f"Draw the FULL character body from scratch in the new pose. "
+            f"Do NOT just edit a small part of the original image — redraw the entire character in the requested pose."
+        )
+        
+        print(f"Enhanced prompt: '{enhanced_prompt}'")
+        
+        # Use Gemini's native image editing: send image + prompt to generate_content
+        response = self.client.models.generate_content(
+            model='gemini-2.5-flash-image',
+            contents=[enhanced_prompt, base_image],
+            config=types.GenerateContentConfig(
+                response_modalities=['IMAGE']
+            )
+        )
+        
+        # Extract the generated image from response parts
+        for part in response.parts:
+            if part.inline_data is not None:
+                generated_image = part.as_image()
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+                generated_image.save(output_path)
+                print(f"Image-to-image generated successfully")
+                return output_path
+        
+        raise ValueError(f"No image data in Gemini response. The model may have returned text only.")
 
     def has_transparency(self, input_path):
         """
