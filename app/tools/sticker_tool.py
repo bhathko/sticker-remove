@@ -203,7 +203,7 @@ def image_to_image_tool(prompt: str, base_image_path: str, output_filename: str)
         else:
             base_image_path = os.path.join("data", "input", base_image_path) # Default to input
 
-    output_path = os.path.join("data", "input", output_filename)
+    output_path = os.path.join("data", "output", output_filename)
     processor = get_processor()
     try:
         final_path = processor.image_to_image(prompt, base_image_path, output_path)
