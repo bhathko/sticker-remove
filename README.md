@@ -1,38 +1,233 @@
-# 动漫贴纸制作工具 (Sticker Remover)
+# Sticker Creator Agent
 
-这是一个专门为动漫/漫画角色优化的贴纸制作工具。它能够自动去除背景、清理杂点、优化边缘并调整到指定尺寸。
+> ⚠️ **Note on Project Name**: This folder may be named `sticker-remove` but this is a **Sticker Creator/Generator** tool. The name historically refers to the background removal feature, not the main purpose.
 
-## 🛠 开发背景与历程
+An AI-powered sticker creation tool that uses **LangGraph + Gemini** to generate, clean, and format professional stickers automatically.
 
-本项目经历了以下几个技术迭代阶段：
+## 🚀 Quick Outline
 
-1.  **基础背景去除**: 采用了 `briaai/RMBG-1.4` 模型。这是目前处理边缘最细腻的模型之一。
-2.  **透明度修复**: 在开发过程中，曾遇到角色内部颜色被误判为背景而变透明的问题。我们通过“岛屿过滤逻辑”替代了粗暴的“全填充逻辑”，在保留背景清理能力的同时，确保了角色身体的完整性。
-3.  **杂点清理 (Island Removal)**: 动漫图片在背景去除后经常会留下细小的像素碎块（噪点）。我们引入了连通域分析算法，自动识别并删除面积过小的“孤岛”像素。
-4.  **边缘光晕修复 (Halo Fixing)**: 针对背景颜色渗入角色边缘的问题，引入了“边缘腐蚀 (Erosion)”技术，将遮罩向内收缩，配合高斯模糊，实现了干净且自然的切割边缘。
-5.  **高质量缩放**: 为了满足特定的贴纸尺寸需求 (如 370x320)，集成了 LANCZOS 采样算法，确保放大后的线条依然锐利。
+This project uses the **modern LangGraph architecture** (v2.0) with a ReAct agent pattern:
 
-## 📂 核心文件结构
+### 1. Core Features
 
-- `main.py`: **主程序入口**。用户在此调整参数并运行。
-- `sticker_remover.py`: **核心逻辑类**。封装了 AI 模型加载、OpenCV 图像处理全流程。
-- `requirements.txt`: 项目依赖包列表。
+- **AI Image Generation**: Create unique images from text prompts using Google Gemini Imagen 3 API
+- **Background Removal**: Professional-grade segmentation using the `RMBG-1.4` AI model
+- **Auto-Cleaning**: Intelligent noise removal, edge optimization, and halo removal
+- **Standard Formatting**: Resizes to perfect sticker dimensions (370x320px) with transparency
 
-## ⚙️ 参数调整指南
+### 2. Modern LangGraph Architecture
 
-在 `main.py` 中，你可以通过以下参数微调效果：
+- ✅ **LangGraph `create_react_agent`** (replaces deprecated `AgentExecutor`)
+- ✅ **Message-based invocation** for better state management
+- ✅ **Streaming support** for real-time agent progress
+- ✅ **Tool-calling with proper schemas** using Pydantic models
+- ✅ **Configurable system prompts** via `state_modifier`
 
-| 参数 | 建议值 | 作用描述 |
-| :--- | :--- | :--- |
-| `erosion_size` | 1 ~ 3 | **消除边框杂色**。如果边缘残留原图背景色，请调大。 |
-| `island_size` | 50 ~ 200 | **清理背景碎点**。如果背景不够干净，请调大。 |
-| `target_size` | (370, 320) | **最终输出尺寸**。会自动居中并保持比例，多余部分透明。 |
+### 3. Project Structure
 
-## 🚀 如何开始
+```
+app/                          # Main application package
+├── agent.py                  # LangGraph ReAct agent (v2.0 pattern)
+├── model.py                  # Gemini LLM configuration
+├── services/                # Core business logic (LLM-agnostic)
+│   └── processor.py         # StickerProcessor class (image processing)
+└── tools/                   # LangChain tool wrappers
+    └── sticker_tool.py      # 4 tools: generate, check, remove, resize
 
-1. 确保安装了依赖：`pip install -r requirements.txt`
-2. 将你的图片命名为 `3.jpg` (或在 main.py 中修改路径)。
-3. 运行：`python main.py`
+main.py                   # CLI entry point (standard mode)
+main_streaming.py         # CLI entry point (streaming mode - real-time updates)
+test_setup.py             # Environment validation (checks installation)
+
+data/
+├── input/                   # Generated images (before processing)
+└── output/                  # Processed stickers (final results)
+
+docs/                     # Comprehensive documentation (consolidated)
+├── README.md                 # Documentation guide with learning paths
+├── FILE-STRUCTURE-GUIDE.md  # File naming & structure clarification
+├── SETUP-GUIDE.md           # Installation, configuration & parameter tuning
+├── LANGGRAPH-THEORY.md      # LangGraph deep dive with visual diagrams
+├── ARCHITECTURE.md          # Design patterns and rationale
+├── PROJECT-STRUCTURE.md     # File reference guide
+└── DEVELOPER-REFERENCE.md   # Quick reference for developers
+```
+
+**Key Points**:
+
+- 📚 All tools in one module (`sticker_tool.py` contains 4 tools)
+- 📦 Single processor class (`processor.py` contains `StickerProcessor`)
+- 📁 Clear separation: `services/` (business logic) vs `tools/` (LLM interface)
+- 📝 Extensive documentation in `docs/` folder (8 markdown files)
+
+```
+
+### 4. Workflow
+
+1. **Generate** → Gemini Imagen creates image from prompt
+2. **Check** → Verify if background removal is needed
+3. **Remove** → AI-powered background removal (RMBG-1.4)
+4. **Resize** → Format to standard sticker size (370x320px)
+
+### 5. How LangGraph Works
+
+**The ReAct Loop** (Reasoning + Acting):
+
+```
+
+User: "Create a cat sticker"
+│
+▼
+┌─────────────────────────────────────────────┐
+│ LangGraph automatically manages this cycle: │
+│ │
+│ 1. Agent (Gemini) THINKS: │
+│ "I need to generate an image first" │
+│ │
+│ 2. Agent ACTS: │
+│ Calls generate_image tool │
+│ │
+│ 3. Tool EXECUTES: │
+│ Gemini Imagen API creates image │
+│ │
+│ 4. Agent OBSERVES: │
+│ "Image saved at data/input/cat.jpg" │
+│ │
+│ ↓ (Loop continues...) │
+│ │
+│ 5. Agent: Check background │
+│ 6. Agent: Remove background │
+│ 7. Agent: Resize image │
+│ 8. Agent: FINISH → Return result │
+└─────────────────────────────────────────────┘
+
+```
+
+**Key concepts:**
+
+- **Messages**: Every interaction (human, AI, tool) is a message in state
+- **State**: Full conversation history maintained across all steps
+- **Graph**: Nodes (agent, tools) connected by edges (routing logic)
+- **Automatic**: LangGraph handles the loop, you just define tools
+
+See [� Documentation](./docs/README.md) for complete guides.
 
 ---
-*本项目已清理所有实验性脚本，目前为最终稳定版。*
+
+## 📚 Documentation
+
+> 📝 **New to the project?** Start with **[FILE-STRUCTURE-GUIDE.md](./docs/FILE-STRUCTURE-GUIDE.md)** to understand file structure and naming conventions.
+> 🗺️ **Want guided tour?** See **[docs/README.md](./docs/README.md)** - Complete documentation guide with learning paths.
+
+Comprehensive documentation is available in the `docs/` directory:
+
+### Core Documentation
+
+- **[⚠️ File Structure Guide](./docs/FILE-STRUCTURE-GUIDE.md)**
+  File naming conventions, clarifications, structure verification, and risk assessment.
+
+- **[🚀 Setup Guide](./docs/SETUP-GUIDE.md)**
+  Installation, API key setup, configuration, parameter tuning, and troubleshooting.
+
+- **[🧠 LangGraph Theory](./docs/LANGGRAPH-THEORY.md)** ⭐ NEW
+  **Deep dive into how LangGraph triggers the model**, ReAct pattern, message-based architecture, and tool calling flow. **Read this to understand how everything works under the hood.**
+
+- **[🏗️ Architecture Overview](./docs/ARCHITECTURE.md)**
+  Understanding the separation between Services and Tools, and how LangGraph integrates.
+
+- **[📁 Project Structure](./docs/PROJECT-STRUCTURE.md)** ⭐ NEW
+  Complete file organization, responsibilities, data flow, and dependency graph.
+
+
+
+- **[👨‍💻 Developer Reference](./docs/DEVELOPER-REFERENCE.md)** ⭐ NEW
+  Quick reference for common tasks, adding tools, debugging, and code patterns.
+
+
+
+- **[📝 Changelog](./CHANGELOG.md)**
+  Details about the LangGraph v2.0 migration and new features.
+
+### Quick Links
+
+```
+
+⚠️ Confused about file names? → docs/FILE-STRUCTURE-GUIDE.md
+🚀 Need to install & setup? → docs/SETUP-GUIDE.md
+📖 How does LangGraph work? → docs/LANGGRAPH-THEORY.md
+🔧 Why this architecture? → docs/ARCHITECTURE.md
+📂 What files do what? → docs/PROJECT-STRUCTURE.md
+💻 How to extend/customize? → docs/DEVELOPER-REFERENCE.md
+🗺️ Documentation overview? → docs/README.md
+
+````
+
+---
+
+## ⚡ Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+````
+
+### 2. Configure API Keys
+
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env and add your Google API key
+# Get your key from: https://makersuite.google.com/app/apikey
+```
+
+### 3. Validate Setup
+
+```bash
+python test_setup.py
+```
+
+### 4. Run the Agent
+
+```bash
+# Standard mode
+python main.py
+
+# Streaming mode (real-time progress)
+python main_streaming.py
+```
+
+### Example Usage
+
+```
+✨ Describe your sticker: a cute cartoon cat with big eyes
+
+🤖 Agent is working...
+
+💭 Agent: I'll create that sticker for you. Let me generate the image first...
+🔧 Tool: generate_image
+💭 Agent: Now checking if background removal is needed...
+🔧 Tool: check_image_background
+💭 Agent: Removing the background...
+🔧 Tool: remove_background
+💭 Agent: Resizing to standard sticker format...
+🔧 Tool: resize_for_sticker
+
+✅ Your sticker is ready at: data/output/cat_resized.png
+```
+
+---
+
+## 🔧 Key Updates (v2.0)
+
+- **Modern LangGraph**: Migrated from deprecated `AgentExecutor` to `create_react_agent`
+- **Gemini Imagen**: Native integration with Google's image generation API
+- **Better Tools**: Enhanced descriptions and proper workflow guidance
+- **Streaming Support**: Watch the agent work in real-time
+- **Fixed Bugs**: Resolved critical indentation issues in processor
+
+See [CHANGELOG.md](./CHANGELOG.md) for full details.
+
+---
+
+_Powered by LangGraph + Gemini_

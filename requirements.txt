@@ -1,5 +1,21 @@
+# Core ML and Image Processing
 transformers==4.48.0
 Pillow
 torch
 torchvision
 numpy
+opencv-python
+
+# LangChain and LangGraph
+langchain
+langchain-core
+langchain-google-genai
+langgraph
+
+# Utilities
+pydantic
+python-dotenv
+requests
+
+# Optional: For Banana.dev support
+# banana-dev

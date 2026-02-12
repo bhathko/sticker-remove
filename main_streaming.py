@@ -8,8 +8,8 @@ load_dotenv()
 
 def main():
     """
-    Main entry point for the Sticker Creator Agent.
-    Supports both streaming and non-streaming execution.
+    Streaming version of the Sticker Creator Agent.
+    Shows real-time progress as the agent thinks and acts.
     """
     # Ensure necessary directories exist
     os.makedirs("data/input", exist_ok=True)
@@ -19,12 +19,9 @@ def main():
     agent = create_sticker_agent()
 
     print("=" * 60)
-    print("🎨 Sticker Creator Agent (LangGraph + Gemini)")
+    print("🎨 Sticker Creator Agent - STREAMING MODE")
     print("=" * 60)
-    print("This agent will:")
-    print("  1. Generate images from your prompts")
-    print("  2. Remove backgrounds automatically")
-    print("  3. Resize to standard sticker format (370x320px)")
+    print("Watch the agent work in real-time!")
     print("\nType 'exit' or 'quit' to stop.")
     print("=" * 60)
 
@@ -40,15 +37,25 @@ def main():
         try:
             print("\n🤖 Agent is working...\n")
             
-            # Invoke the LangGraph agent with messages format
-            response = agent.invoke(
+            # Stream the agent's execution
+            for event in agent.stream(
                 {"messages": [HumanMessage(content=user_input)]},
-                config={"configurable": {"thread_id": "default"}}
-            )
+                config={"configurable": {"thread_id": "default"}},
+                stream_mode="values"
+            ):
+                # Get the latest message
+                if "messages" in event:
+                    last_message = event["messages"][-1]
+                    
+                    # Print AI messages (reasoning)
+                    if hasattr(last_message, 'content') and last_message.content:
+                        if hasattr(last_message, 'type'):
+                            if last_message.type == 'ai':
+                                print(f"💭 Agent: {last_message.content}")
+                            elif last_message.type == 'tool':
+                                print(f"🔧 Tool Result: {last_message.content[:100]}...")
             
-            # Extract the final message from the graph
-            final_message = response['messages'][-1].content
-            print(f"\n✅ {final_message}")
+            print("\n✅ Done!")
             
         except KeyboardInterrupt:
             print("\n\n⚠️  Interrupted by user")
