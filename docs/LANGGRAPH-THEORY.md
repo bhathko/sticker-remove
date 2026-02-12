@@ -133,7 +133,7 @@ from langgraph.prebuilt import create_react_agent
 agent = create_react_agent(
     model=llm,          # Gemini model
     tools=tools,        # List of available tools
-    state_modifier=...  # System prompt
+    prompt=...          # System prompt
 )
 ```
 
@@ -170,7 +170,7 @@ def agent_node(state):
     # Model reads:
     # 1. All previous messages
     # 2. Tool descriptions/schemas
-    # 3. System prompt (state_modifier)
+    # 3. System prompt (prompt)
 
     response = model.invoke(messages)
 
@@ -526,7 +526,7 @@ from langgraph.prebuilt import create_react_agent
 agent = create_react_agent(
     model=llm,
     tools=tools,
-    state_modifier="Custom system prompt..."
+    prompt="Custom system prompt..."
 )
 
 result = agent.invoke({"messages": [HumanMessage(content="Create a sticker")]})

@@ -138,9 +138,9 @@ class StickerProcessor:
 
     def _generate_with_gemini_imagen(self, prompt, output_path):
         """
-        Generate image using Google Gemini Imagen 3 API.
+        Generate image using Google Gemini Imagen 4 API.
         """
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key={self.google_api_key}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key={self.google_api_key}"
         
         payload = {
             "instances": [{
@@ -183,7 +183,7 @@ class StickerProcessor:
             raise ImportError("google-genai package not installed or GOOGLE_API_KEY missing.")
             
         response = self.client.models.generate_image(
-            model='imagen-3.0-generate-001',
+            model='imagen-4.0-generate-001',
             prompt=prompt,
             config=types.GenerateImageConfig(
                 number_of_images=1,

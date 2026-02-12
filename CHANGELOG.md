@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.1.0] - 2026-02-12
+
+### 🚀 Major Changes
+
+#### Model Upgrades
+- **Upgraded Gemini LLM** to `gemini-2.5-flash` for faster and more accurate reasoning.
+- **Upgraded Imagen API** to version `4.0` (`imagen-4.0-generate-001`) for superior sticker image generation.
+
+#### Tool Enhancements
+- **Fixed and completed tool implementations** in `app/tools/sticker_tool.py`:
+  - `check_background_tool`: Now correctly returns background status.
+  - `remove_background_tool`: fully implemented with proper path handling and processor call.
+  - `resize_for_sticker`: Improved path resolution to check both `input` and `output` directories.
+- **Updated tool docstrings** for better agent understanding.
+
+#### LangGraph Refinement
+- **Updated `create_react_agent`** to use the `prompt` parameter instead of the deprecated/renamed `state_modifier`.
+- **Improved path handling** across all tools to ensure consistent behavior in different environments.
+
+### 📝 Documentation Updates
+- Updated all core documentation files (`README.md`, `GEMINI.md`, `docs/*`) to reflect model and API version changes.
+
 ## [2.0.0] - Updated to Latest LangGraph Patterns
 
 ### 🚀 Major Changes

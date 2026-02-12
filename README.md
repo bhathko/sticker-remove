@@ -10,7 +10,7 @@ This project uses the **modern LangGraph architecture** (v2.0) with a ReAct agen
 
 ### 1. Core Features
 
-- **AI Image Generation**: Create unique images from text prompts using Google Gemini Imagen 3 API
+- **AI Image Generation**: Create unique images from text prompts using Google Gemini Imagen 4 API
 - **Background Removal**: Professional-grade segmentation using the `RMBG-1.4` AI model
 - **Auto-Cleaning**: Intelligent noise removal, edge optimization, and halo removal
 - **Standard Formatting**: Resizes to perfect sticker dimensions (370x320px) with transparency
@@ -21,7 +21,7 @@ This project uses the **modern LangGraph architecture** (v2.0) with a ReAct agen
 - ✅ **Message-based invocation** for better state management
 - ✅ **Streaming support** for real-time agent progress
 - ✅ **Tool-calling with proper schemas** using Pydantic models
-- ✅ **Configurable system prompts** via `state_modifier`
+- ✅ **Configurable system prompts** via `prompt` parameter
 
 ### 3. Project Structure
 

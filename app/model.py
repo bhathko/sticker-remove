@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def get_gemini_model(model_name="gemini-1.5-flash"):
+def get_gemini_model(model_name="gemini-2.5-flash"):
     """
     Initializes and returns the Gemini Chat Model.
     Ensure GOOGLE_API_KEY is set in your .env file.

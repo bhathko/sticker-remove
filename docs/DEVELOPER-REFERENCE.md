@@ -117,7 +117,7 @@ Edit `app/agent.py`:
 agent_graph = create_react_agent(
     model=llm,
     tools=tools,
-    state_modifier="""Your custom instructions here.
+    prompt="""Your custom instructions here.
 
     You are a sticker creator that:
     - Always makes images cute
@@ -132,7 +132,7 @@ agent_graph = create_react_agent(
 Edit `app/model.py`:
 
 ```python
-def get_gemini_model(model_name="gemini-1.5-pro"):  # Change model
+def get_gemini_model(model_name="gemini-2.5-flash"):  # Change model
     return ChatGoogleGenerativeAI(
         model=model_name,
         temperature=0.7,  # Increase for more creativity
@@ -454,7 +454,7 @@ After calling, summarize what you generated.
 The agent automatically chains tools based on results. To encourage specific sequences:
 
 ```python
-# In state_modifier
+# In prompt
 """Always follow this workflow:
 1. generate_image first
 2. Then check_background

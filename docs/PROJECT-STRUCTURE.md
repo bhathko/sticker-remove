@@ -38,7 +38,7 @@ sticker-creator/                 # Project root (may be named 'sticker-remove')
 │   │       # NOTE: Could be renamed to 'sticker_processor.py' to match class name
 │   │       └── StickerProcessor class
 │   │           ├── __init__()   - Load RMBG-1.4 model
-│   │           ├── generate_image() - Gemini Imagen / Nano Banana API
+│   │           ├── generate_image() - Gemini Imagen 4.0 API
 │   │           ├── remove_background() - AI background removal
 │   │           ├── resize_image() - Smart resizing with padding
 │   │           └── has_transparency() - Check for alpha channel
@@ -186,8 +186,8 @@ Returns: CompiledGraph (LangGraph agent)
 Process:
 1. Import tools from tools/sticker_tool.py
 2. Get Gemini model from model.py
-3. Define state_modifier (system prompt)
-4. Call create_react_agent(model, tools, state_modifier)
+3. Define prompt (system prompt)
+4. Call create_react_agent(model, tools, prompt)
 5. Return compiled graph
 
 Graph Structure:
@@ -211,7 +211,7 @@ Graph Structure:
 
 ```python
 Parameters:
-  model_name: str = "gemini-1.5-flash"
+  model_name: str = "gemini-2.5-flash"
 
 Returns: ChatGoogleGenerativeAI
 
@@ -253,9 +253,8 @@ __init__(model_name="briaai/RMBG-1.4")
 ```
 Purpose: Create image from text
 API Priority:
-  1. Try Gemini Imagen 3 (REST API)
-  2. Try Nano Banana (google-genai SDK)
-  3. Fallback to test image (data/input/1.jpg)
+  1. Try Gemini Imagen 4 (REST API)
+  2. Fallback to test image (data/input/1.jpg)
 
 Returns: Path to saved image
 ```
@@ -656,7 +655,7 @@ main.py
 4. **Configuration Over Code**
    - Environment variables for API keys
    - Pydantic schemas for validation
-   - State modifier for prompts
+   - Prompt parameter for system instructions
 
 5. **User-Friendly Errors**
    - Tools catch exceptions
@@ -691,7 +690,7 @@ Want to extend the project? Here's where to start:
 ### Customize the Agent
 
 1. Edit `agent.py`
-2. Modify `state_modifier` (system prompt)
+2. Modify `prompt` (system prompt)
 3. Or replace `create_react_agent()` with custom graph
 
 ---

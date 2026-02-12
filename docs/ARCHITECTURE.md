@@ -59,7 +59,7 @@ To understand how they interact, consider a request to **"Make a 370x320 sticker
 
 1.  **Agent (Model)**: Reads the user prompt and looks at the **Tool** descriptions.
 2.  **Tool**: The Agent decides to call the `generate_image` tool with specific arguments.
-3.  **Service**: The Tool invokes the `StickerProcessor.generate_image` method. The service talks to the Google Imagen API (via REST or official SDK) and saves the file.
+3.  **Service**: The Tool invokes the `StickerProcessor.generate_image` method. The service talks to the Google Imagen API (v4.0 via REST or official SDK) and saves the file.
 4.  **Tool**: Returns "Image saved at data/input/cat.jpg" to the Agent.
 5.  **Agent**: Sees the image is saved. It now calls the `remove_background` tool.
 6.  **Service**: The Service runs the `RMBG-1.4` model on the cat image.
@@ -88,7 +88,7 @@ from langgraph.prebuilt import create_react_agent
 agent = create_react_agent(
     model=llm,          # Gemini LLM
     tools=tools,        # Our 4 tools
-    state_modifier=...  # System prompt
+    prompt=...          # System prompt
 )
 ```
 
@@ -141,7 +141,7 @@ This allows the agent to:
 | Customization    | Hard to modify          | Easy to customize nodes      |
 | Streaming        | Limited support         | Full streaming support       |
 | Debugging        | Opaque                  | Transparent state inspection |
-| Prompt Control   | External hub dependency | Built-in `state_modifier`    |
+| Prompt Control   | External hub dependency | Built-in `prompt` parameter  |
 | Error Handling   | Basic                   | Advanced with retries        |
 
 ---
@@ -402,7 +402,7 @@ Edit `app/agent.py`:
 agent_graph = create_react_agent(
     model=llm,
     tools=tools,
-    state_modifier="""You are a sticker creator.
+    prompt="""You are a sticker creator.
     Special requirements:
     - Always make images cute and colorful
     - Prefer cartoon style

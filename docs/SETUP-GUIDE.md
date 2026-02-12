@@ -47,13 +47,13 @@ The project uses a `.env` file for API keys and sensitive configuration.
 2. **Edit `.env` and add your API keys**:
 
    ```bash
-   # Required: Gemini LLM for agent reasoning and Imagen 3 / Nano Banana for image generation
+   # Required: Gemini LLM for agent reasoning and Imagen 4.0 for image generation
    GOOGLE_API_KEY=your_google_api_key_here
    ```
 
 ### Getting API Keys
 
-**Google API Key (Gemini & Nano Banana)**:
+**Google API Key (Gemini & Imagen 4)**:
 
 1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Create or select a project

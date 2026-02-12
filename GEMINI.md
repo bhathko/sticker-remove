@@ -7,7 +7,7 @@ This project is an AI-powered sticker creation tool that utilizes **LangGraph** 
 - **Purpose**: Automate the creation of stickers from text prompts.
 - **Core Stack**: 
   - **Orchestration**: LangGraph (v2.0 ReAct agent pattern).
-  - **LLM/Image Gen**: Google Gemini (Imagen 3 API via REST and official google-genai SDK).
+  - **LLM/Image Gen**: Google Gemini (Imagen 4 API via REST and official google-genai SDK).
   - **Image Processing**: RMBG-1.4 (Background Removal), OpenCV, PIL, PyTorch.
   - **Architecture**: Separates **Services** (core business logic in `app/services/processor.py`) from **Tools** (LLM interface in `app/tools/sticker_tool.py`).
   ## 🛠️ Key Commands
@@ -21,8 +21,8 @@ This project is an AI-powered sticker creation tool that utilizes **LangGraph** 
 ## 📂 Project Structure
 
 - `app/agent.py`: LangGraph agent definition using `create_react_agent`.
-- `app/model.py`: Gemini LLM configuration via LangChain.
-- `app/services/processor.py`: `StickerProcessor` class for image generation, background removal (RMBG-1.4), and resizing.
+- `app/model.py`: Gemini LLM configuration via LangChain (defaults to `gemini-2.5-flash`).
+- `app/services/processor.py`: `StickerProcessor` class for image generation (Imagen 4.0), background removal (RMBG-1.4), and resizing.
 - `app/tools/sticker_tool.py`: LangChain tools (`generate_image`, `check_image_background`, `remove_background`, `resize_for_sticker`).
 - `data/`: `input/` for base images, `output/` for final stickers.
 - `docs/`: Extensive documentation including `ARCHITECTURE.md`, `LANGGRAPH-THEORY.md`, and `DEVELOPER-REFERENCE.md`.
@@ -35,7 +35,7 @@ The agent follows a ReAct loop:
 3. **Observe**: Process tool output and update state.
 
 **Standard Workflow**:
-`Prompt` → `Generate (Imagen 3)` → `Check BG` → `Remove BG (RMBG-1.4)` → `Resize (370x320px)`
+`Prompt` → `Generate (Imagen 4)` → `Check BG` → `Remove BG (RMBG-1.4)` → `Resize (370x320px)`
 
 ## 📝 Development Conventions
 
@@ -49,7 +49,7 @@ The agent follows a ReAct loop:
   - Handle file path normalization (defaults to `data/input` or `data/output`).
 - **State Management**:
   - Uses the message-based state of LangGraph.
-  - The `state_modifier` in `app/agent.py` defines the system prompt and persona.
+  - The `prompt` in `app/agent.py` defines the system prompt and persona.
 - **Error Handling**:
   - Tools should catch exceptions and return informative error messages to the agent so it can attempt recovery.
 

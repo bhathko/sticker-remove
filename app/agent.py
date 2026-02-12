@@ -34,7 +34,7 @@ def create_sticker_agent():
     agent_graph = create_react_agent(
         model=llm, 
         tools=tools,
-        state_modifier="""You are an expert sticker creation assistant. Your job is to help users create professional stickers by:
+        prompt="""You are an expert sticker creation assistant. Your job is to help users create professional stickers by:
 1. Generating images from text prompts using the generate_image tool
 2. Checking if the generated image needs background removal
 3. Removing backgrounds when needed for clean transparent stickers
