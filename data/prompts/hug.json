@@ -2,11 +2,11 @@
   "type": "image-to-image",
   "base_image": "4.png",
   "subject": "same character from reference, enhanced to be extremely cute and chibi-like",
-  "pose": "standing, one hand raised high waving, bouncy and energetic stance",
-  "expression": "smiling warmly with large sparkly expressive eyes",
-  "action": "waving hello enthusiastically",
+  "pose": "standing with arms wide open, leaning forward slightly",
+  "expression": "warm, friendly, and welcoming smile with sparkly eyes and blushing cheeks",
+  "action": "offering a warm hug",
   "art_style": "high-quality 2D animation style, kawaii aesthetic, soft rounded features, vibrant colors, clean vector lines",
   "framing": "full body",
   "background": "white background",
-  "extras": "small sparkles around the character"
+  "extras": "sparkles and soft warm aura around the character"
 }

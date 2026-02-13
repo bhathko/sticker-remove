@@ -1,12 +1,12 @@
 {
   "type": "text-to-image",
   "base_image": null,
-  "subject": "cute cartoon cat",
-  "pose": "standing upright",
-  "expression": "cool, confident",
-  "action": "wearing sunglasses",
-  "art_style": "cartoon sticker style, flat colors, clean lines",
+  "subject": "extremely cute chibi cartoon cat",
+  "pose": "standing upright in a bouncy animation stance",
+  "expression": "cool, confident with a cute smirk and large sparkly eyes",
+  "action": "wearing stylish sunglasses",
+  "art_style": "high-quality 2D animation style, kawaii aesthetic, soft rounded features, vibrant colors, clean vector lines",
   "framing": "full body",
   "background": "white background",
-  "extras": null
+  "extras": "sparkles and a cool star icon nearby"
 }

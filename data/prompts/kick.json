@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference, extremely cute and bouncy animation",
+  "pose": "balancing on one leg, the other leg extended in a high kick",
+  "expression": "determined and yelling in a cute way",
+  "action": "performing a high kick",
+  "art_style": "high-quality 2D animation style, kawaii aesthetic, soft rounded features, vibrant colors, clean vector lines",
+  "framing": "full body",
+  "background": "white background",
+  "extras": "curved motion lines and tiny impact stars"
+}

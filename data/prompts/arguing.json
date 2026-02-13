@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference, comically cute and expressive",
+  "pose": "leaning forward, one tiny finger pointing forward, exaggerated stance",
+  "expression": "angry shouting mouth, furrowed brows, but still very cute",
+  "action": "arguing or scolding",
+  "art_style": "high-quality 2D animation style, kawaii aesthetic, soft rounded features, vibrant colors, clean vector lines",
+  "framing": "full body",
+  "background": "white background",
+  "extras": "colorful jagged speech bubble with cute icons like '#!?' inside"
+}
