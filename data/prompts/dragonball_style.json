@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "6.png",
+  "subject": "same character from reference, reimagined as a powerful fighter",
+  "pose": "powering up stance, knees bent, fists clenched at sides, intense energy",
+  "expression": "fierce determination, shouting with intensity, sharp focused eyes",
+  "action": "charging up a massive energy aura",
+  "art_style": "Classic Dragon Ball Z style, 90s retro anime, thick bold outlines, heavy dramatic cel-shading, sharp muscle definition, spiky hair adaptation",
+  "framing": "full body",
+  "background": "white background",
+  "extras": "electric yellow and blue jagged aura flames, small rocks floating around the character"
+}

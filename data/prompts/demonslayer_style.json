@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference, reimagined as a demon slayer samurai",
+  "pose": "dynamic sword-slashing pose, leaning low, holding a katana",
+  "expression": "focused 'Total Concentration Breathing' expression, calm but intense",
+  "action": "performing a stylized sword technique",
+  "art_style": "Demon Slayer (Ufotable) anime style, high-contrast vibrant colors, delicate but sharp line work, Ukiyo-e traditional Japanese art effects, expressive glossy eyes",
+  "framing": "full body",
+  "background": "white background",
+  "extras": "beautiful stylized flowing water or fire waves spiraling around the character and sword"
+}

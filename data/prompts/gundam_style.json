@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference, reimagined as a pilot in a mechanical suit",
+  "pose": "standing heroically, wearing high-tech futuristic mechanical armor",
+  "expression": "stoic and brave pilot expression",
+  "action": "ready for mecha combat",
+  "art_style": "Classic Gundam/Mecha anime style, detailed panel lines, mechanical joints, metallic highlights, bright primary colors (white, red, blue, yellow), 80s/90s sci-fi aesthetic",
+  "framing": "full body",
+  "background": "white background",
+  "extras": "mechanical thrusters with blue exhaust flames, technical labels and warning signs on the armor"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "image-to-image",
+  "base_image": "4.png",
+  "subject": "same character from reference, reimagined as a Studio Ghibli character",
+  "pose": "gentle and natural standing pose, looking up at the sky",
+  "expression": "innocent, curious, and peaceful smile, soft expressive eyes",
+  "action": "standing in a soft breeze",
+  "art_style": "Studio Ghibli (Hayao Miyazaki) style, hand-painted watercolor-like aesthetic, soft lines, natural earthy colors, whimsical and nostalgic atmosphere",
+  "framing": "full body",
+  "background": "white background",
+  "extras": "tiny soot sprites or small forest spirits nearby, wind lines shown through soft hair movement"
+}

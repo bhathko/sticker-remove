@@ -12,6 +12,10 @@ __pycache__/
 *.swp
 *.swo
 
+# 环境文件
+.env
+.env.local
+
 # 操作系统文件
 .DS_Store
 Thumbs.db
